@@ -1,59 +1,62 @@
 makeBold = function (form) {
-	var text = document.getElementById(form);
-	var startIndex = text.selectionStart,
-	endIndex = text.selectionEnd;
-	var selectedText = text.value.substring(startIndex, endIndex);
-
-	var format = '**'
-
-	if (selectedText.includes('**')) {
-		text.value = selectedText.replace(/\*/g, '');
-	}
-	else if (selectedText.length == 0) {
-		text.value = text.value.substring(0, startIndex) + selectedText + text.value.substring(endIndex);
-	}
-	else {
-		text.value = text.value.substring(0, startIndex) + format + selectedText + format + text.value.substring(endIndex);
-	}
+	addFormat(form, '**')
 }
 
 makeItalics = function (form) {
-	var text = document.getElementById(form);
-	var startIndex = text.selectionStart,
-	endIndex = text.selectionEnd;
-	var selectedText = text.value.substring(startIndex, endIndex);
-
-	var format = '*'
-
-	if (selectedText.includes('*')) {
-		text.value = selectedText.replace(/\*/g, '');
-	}
-	else if (selectedText.length == 0) {
-		text.value = text.value.substring(0, startIndex) + selectedText + text.value.substring(endIndex);
-	}
-	else {
-		text.value = text.value.substring(0, startIndex) + format + selectedText + format + text.value.substring(endIndex);
-	}
+	addFormat(form, '*')
 }
 
 makeQuote = function (form) {
-	var text = document.getElementById(form);
-	var startIndex = text.selectionStart,
-	endIndex = text.selectionEnd;
-	var selectedText = text.value.substring(startIndex, endIndex);
-
-	var format = '>'
-
-	if (selectedText.includes('>')) {
-		text.value = text.value.substring(0, startIndex) + selectedText.replace(/\>/g, '') + text.value.substring(endIndex);
-	}
-	else if (selectedText.length == 0) {
-		text.value = text.value.substring(0, startIndex) + selectedText + text.value.substring(endIndex);
-	}
-	else {
-		text.value = text.value.substring(0, startIndex) + format + selectedText + text.value.substring(endIndex);
-	}
+	addFormat(form, '>', false)
 }
+
+/***
+ * Takes a form and does one of three things:
+ *  * If no text is selected, insert the format char and puts the cursor in the expected place
+ *  * If the format is not applied to the selection, applies it
+ *  * If the format was already applied, it removes it.
+ *  Also refocus the form after inserting the formatting chars
+ *
+ * @param {string} form The destination form id to do this transformation on
+ * @param {string} format The tag to add, for example '*' for italics
+ * @param {boolean} [repeatOnEnd=true] Flag that says that the {@link format} should be repeated at the end.
+ */
+function addFormat(form, format, repeatOnEnd = true) {
+
+	function escape(string) {
+		return string.replace(/[|\\{}()[\]^$+*?.]/g, '\\$&')
+	}
+
+	const text = document.getElementById(form);
+	const startIndex = text.selectionStart;
+	const endIndex = text.selectionEnd;
+	const selectedText = text.value.substring(startIndex, endIndex);
+
+	let newCursorPos = endIndex
+	let replaceStr = selectedText
+
+	if (selectedText.includes(format)) {
+		replaceStr = selectedText.replace(new RegExp(escape(format), "g"), '');
+		newCursorPos = endIndex - (selectedText.length - replaceStr.length);
+	}
+
+	else if (selectedText.length === 0) {
+		replaceStr = format + selectedText + (repeatOnEnd ? format : "");
+		newCursorPos = startIndex + format.length;
+	}
+
+	else {
+		replaceStr = format + selectedText + (repeatOnEnd ? format : "");
+		newCursorPos = endIndex + format.length * (repeatOnEnd ? 2 : 1);
+	}
+
+	text.value = text.value.substring(0, startIndex) + replaceStr + text.value.substring(endIndex);
+	text.selectionStart = newCursorPos
+	text.selectionEnd = newCursorPos
+
+	text.focus()
+}
+
 function charLimit(form, text) {
 
 	var input = document.getElementById(form);
