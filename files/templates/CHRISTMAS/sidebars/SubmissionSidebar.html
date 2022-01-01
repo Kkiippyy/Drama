@@ -192,13 +192,13 @@
 					<div class="label text-black dark:text-gray-200">Post visibility</div>
 					<div id="sidebar-remove-{{p.id}}" class="{% if p.is_banned %}hidden{% endif %}">
 						<button class="btn btn-red w-full" onclick="post_toast2('/ban_post/{{p.id}}','sidebar-remove-{{p.id}}','sidebar-approve-{{p.id}}')">
-							<i class="fas fa-check fa-sm fa-fw mr-2"></i>
+							<i class="fas fa-ban fa-sm fa-fw mr-2"></i>
 							Remove post
 						</button>
 					</div>
 					<div id="sidebar-approve-{{p.id}}" class="{% if not p.is_banned %}hidden{% endif %}">
 						<button class="btn btn-green w-full" onclick="post_toast2('/unban_post/{{p.id}}','sidebar-remove-{{p.id}}','sidebar-approve-{{p.id}}')">
-							<i class="fas fa-ban fa-sm fa-fw mr-2"></i>
+							<i class="fas fa-check fa-sm fa-fw mr-2"></i>
 							Approve post
 						</button>
 					</div>
