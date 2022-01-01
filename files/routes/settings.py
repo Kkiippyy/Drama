@@ -493,20 +493,22 @@ def gumroad(v):
 
 	if not (v.email and v.is_activated): return {"error": f"You must have a verified email to verify {patron} status and claim your rewards"}, 400
 
-	data = {'access_token': GUMROAD_TOKEN,}
+	data = {'access_token': GUMROAD_TOKEN}
 
 	response = [x['email'] for x in requests.get(f'https://api.gumroad.com/v2/products/{GUMROAD_ID}/subscribers', data=data, timeout=5).json()["subscribers"]]
 	emails = []
 
 	for email in response:
 		if email.endswith("@gmail.com"):
-			email=email.split('@')[0]
-			email=email.split('+')[0]
-			email=email.replace('.','').replace('_','')
-			email=f"{email}@gmail.com"
-		emails.append(email.lower())
+			email2=email.split('@')[0]
+			email2=email2.split('+')[0]
+			email2=email2.replace('.','').replace('_','')
+			email2=f"{email2}@gmail.com"
+		emails[email.lower()] = email2
 
 	if v.email.lower() not in emails: return {"error": "Email not found"}, 404
+
+	data = {'access_token': "4443794f5223eebd213193741f68f95b073a2558c9fe925f39623a8d7a6022ef", 'email':emails[v.email.lower()]}
 
 	response = requests.get('https://api.gumroad.com/v2/sales', data=data, timeout=5).json()["sales"][0]
 	tier = tiers[response["variants_and_quantity"]]
