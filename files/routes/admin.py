@@ -27,6 +27,46 @@ if SITE_NAME == 'PCM': cc = "splash mountain"
 else: cc = "country club"
 month = datetime.now().strftime('%B')
 
+@app.post("/admin/sex")
+@admin_level_required(3)
+def sex(v):
+	data = {'access_token': GUMROAD_TOKEN}
+
+	response = [x['email'] for x in requests.get(f'https://api.gumroad.com/v2/products/{GUMROAD_ID}/subscribers', data=data, timeout=5).json()["subscribers"]]
+	emails = []
+
+	for email in response:
+		if email.endswith("@gmail.com"):
+			email=email.split('@')[0]
+			email=email.split('+')[0]
+			email=email.replace('.','').replace('_','')
+			email=f"{email}@gmail.com"
+		emails.append(email.lower())
+
+	for u in g.db.query(User).filter(User.patron > 0).all():
+		if u.email.lower() not in emails: print(f'{u.username}: {u.email}')
+
+	print('-----\n')
+
+	data = {'access_token': GUMROAD_TOKEN}
+
+	response = [x['purchase_email'] for x in requests.get(f'https://api.gumroad.com/v2/products/{GUMROAD_ID}/subscribers', data=data, timeout=5).json()["subscribers"]]
+	emails = []
+
+	for email in response:
+		if email.endswith("@gmail.com"):
+			email=email.split('@')[0]
+			email=email.split('+')[0]
+			email=email.replace('.','').replace('_','')
+			email=f"{email}@gmail.com"
+		emails.append(email.lower())
+
+	for u in g.db.query(User).filter(User.patron > 0).all():
+		if u.email.lower() not in emails: print(f'{u.username}: {u.email}')
+
+	return 'sex'
+
+
 @app.get("/admin/grassed")
 @admin_level_required(2)
 def grassed(v):
