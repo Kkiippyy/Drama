@@ -186,7 +186,7 @@
 	const input = document.getElementById('post-text');
 
 	if (storage.getItem('bodyText') !== null) {
-		input.innerText = storage.getItem('bodyText');;
+		input.innerText = JSON.parse(storage.getItem('bodyText'));
 	}
 }
 
@@ -206,7 +206,7 @@ bodyInput.addEventListener('keyup', function (e) {
     // Make a new timeout set to go off in 1000ms (1 second)
     timeout = setTimeout(function () {
     	const storage = window.localStorage;
-        storage.setItem('bodyText', bodyInput.value);
+        storage.setItem('bodyText', JSON.stringify(bodyInput.value));
         console.log(storage.getItem('bodyText'))
     }, 1000);
 });
