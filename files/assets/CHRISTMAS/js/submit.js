@@ -77,7 +77,7 @@ document.getElementById('file-upload').addEventListener('change', function(){
 	}
 })
 
-// Local storage
+// Set local storage
 const storage = window.localStorage;
 
 // Get the input box
@@ -90,8 +90,10 @@ let timeout = null;
 const helper = document.getElementById('draft-text');
 
 window.onload = function() {
+	// Get the input box
 	const input = document.getElementById('post-text');
-
+	// If storage contains post draft
+	// set the input to draft and show helper text
 	if (storage.getItem('bodyText') !== null) {
 		input.value = JSON.parse(storage.getItem('bodyText'));
 		helper.innerText = 'Draft loaded from storage';
@@ -104,21 +106,18 @@ bodyInput.addEventListener('keyup', function (e) {
     // This will prevent the previous task from executing
     // if it has been less than <MILLISECONDS>
     clearTimeout(timeout);
-
     // Make a new timeout set to go off in 1000ms (1 second)
     timeout = setTimeout(function () {
     	storage.setItem('bodyText', JSON.stringify(bodyInput.value));
     	helper.innerText = 'Draft saved';
-
-    	console.log(storage.getItem('bodyText'))
     }, 1000);
 });
 
 // Clear local storage on form submit, use "bind()" method to pass key paramater to specifcy with storage to clear
 document.getElementById('submitform').addEventListener('submit', emptyStorage.bind(event, 'bodyText'));
 
-// clear local storage by key name
+// Clear local storage by key name
 function emptyStorage(key) {
+	// Specify data and clear it
 	window.localStorage.removeItem(key);
-	console.log('local storage cleared')
 }
