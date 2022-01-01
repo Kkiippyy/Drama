@@ -149,7 +149,7 @@
 				<div class="label text-black dark:text-gray-200">Attributes</div>
 				<ul class="flex flex-col mb-0 space-y-3">
 					<li class="flex space-x-2">
-						<input type="checkbox" value="verify" class="w-5 h-5" onchange="verifyBadge(this,'{{u.id}}')" {% if u.verified %}checked{% endif %}>
+						<input type="checkbox" value="verify" class="w-5 h-5" onchange="verifyBadge(this,'test')" {% if u.verified %}checked{% endif %}>
 						<div>
 							<label class="label mb-0" for="verify">Pinned</label>
 							<small class="block text-gray-600 dark:text-gray-400">
@@ -158,7 +158,7 @@
 						</div>
 					</li>
 					<li class="flex space-x-2">
-						<input type="checkbox" value="club" class="w-5 h-5" onchange="clubAccess(this,'{{u.username}}')" {% if u.paid_dues %}checked{% endif %}>
+						<input type="checkbox" value="club" class="w-5 h-5" onchange="clubAccess(this,'test')" {% if u.paid_dues %}checked{% endif %}>
 						<div>
 							<label class="label mb-0" for="club">Country Club</label>
 							<small class="block text-gray-600 dark:text-gray-400">
@@ -167,7 +167,7 @@
 						</div>
 					</li>
 					<li class="flex space-x-2">
-						<input type="checkbox" value="club" class="w-5 h-5" onchange="clubAccess(this,'{{u.username}}')" {% if u.paid_dues %}checked{% endif %}>
+						<input type="checkbox" value="club" class="w-5 h-5" onchange="clubAccess(this,'test')" {% if u.paid_dues %}checked{% endif %}>
 						<div>
 							<label class="label mb-0" for="club">18+</label>
 							<small class="block text-gray-600 dark:text-gray-400">
