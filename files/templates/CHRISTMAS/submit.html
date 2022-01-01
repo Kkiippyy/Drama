@@ -186,7 +186,7 @@
 	const input = document.getElementById('post-text');
 
 	if (storage.getItem('bodyText') !== null) {
-		input.innerText = JSON.parse(storage.getItem('bodyText'));
+		input.value = JSON.parse(storage.getItem('bodyText'));
 	}
 }
 
