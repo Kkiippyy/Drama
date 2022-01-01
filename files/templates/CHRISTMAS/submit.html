@@ -130,7 +130,10 @@
 									</button>
 								</li>
 							</ul>
-							<span class="absolute right-3 bottom-3 z-10 text-xs font-medium text-gray-500" id="character-count-submit-text-form"></span>
+							<span class="absolute right-3 bottom-3 z-10 text-xs font-medium text-gray-500 flex space-x-2">
+								<span id="draft-text"></span>
+								<span id="character-count-submit-text-form"></span>
+							</span>
 						</div>
 					</div>
 					<div class="tab-pane fade" id="nav-preview" role="tabpanel" aria-labelledby="nav-preview-tab">
@@ -206,7 +209,11 @@ bodyInput.addEventListener('keyup', function (e) {
     // Make a new timeout set to go off in 1000ms (1 second)
     timeout = setTimeout(function () {
     	const storage = window.localStorage;
+    	const helper = document.getElementById('draft-text');
+
         storage.setItem('bodyText', JSON.stringify(bodyInput.value));
+
+        helper.innerText = 'Draft saved';
         console.log(storage.getItem('bodyText'))
     }, 1000);
 });
