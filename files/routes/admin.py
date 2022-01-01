@@ -27,45 +27,6 @@ if SITE_NAME == 'PCM': cc = "splash mountain"
 else: cc = "country club"
 month = datetime.now().strftime('%B')
 
-@app.post("/admin/sex")
-@admin_level_required(3)
-def sex(v):
-	data = {'access_token': GUMROAD_TOKEN}
-
-	response = [x['email'] for x in requests.get(f'https://api.gumroad.com/v2/products/{GUMROAD_ID}/subscribers', data=data, timeout=5).json()["subscribers"]]
-	emails = []
-
-	for email in response:
-		if email.endswith("@gmail.com"):
-			email=email.split('@')[0]
-			email=email.split('+')[0]
-			email=email.replace('.','').replace('_','')
-			email=f"{email}@gmail.com"
-		emails.append(email.lower())
-
-	for u in g.db.query(User).filter(User.patron > 0).all():
-		if u.email.lower() not in emails: print(f'{u.username}: {u.email}')
-
-	print('-----\n')
-
-	data = {'access_token': GUMROAD_TOKEN}
-
-	response = [x['purchase_email'] for x in requests.get(f'https://api.gumroad.com/v2/products/{GUMROAD_ID}/subscribers', data=data, timeout=5).json()["subscribers"]]
-	emails = []
-
-	for email in response:
-		if email.endswith("@gmail.com"):
-			email=email.split('@')[0]
-			email=email.split('+')[0]
-			email=email.replace('.','').replace('_','')
-			email=f"{email}@gmail.com"
-		emails.append(email.lower())
-
-	for u in g.db.query(User).filter(User.patron > 0).all():
-		if u.email.lower() not in emails: print(f'{u.username}: {u.email}')
-
-	return 'sex'
-
 
 @app.get("/admin/grassed")
 @admin_level_required(2)
@@ -227,22 +188,13 @@ def remove_meme_admin(v, username):
 @admin_level_required(3)
 @validate_formkey
 def monthly(v):
-	if SITE_NAME == 'Drama' and v.id != AEVANN_ID: abort(403)
+	if request.host == 'rdrama.net' and v.id != 1: abort (403)
 
 	thing = g.db.query(AwardRelationship).order_by(AwardRelationship.id.desc()).first().id
 
 	data = {'access_token': GUMROAD_TOKEN}
 
-	response = [x['email'] for x in requests.get(f'https://api.gumroad.com/v2/products/{GUMROAD_ID}/subscribers', data=data, timeout=5).json()["subscribers"]]
-	emails = []
-
-	for email in response:
-		if email.endswith("@gmail.com"):
-			email=email.split('@')[0]
-			email=email.split('+')[0]
-			email=email.replace('.','').replace('_','')
-			email=f"{email}@gmail.com"
-		emails.append(email.lower())
+	emails = [x['email'] for x in requests.get(f'https://api.gumroad.com/v2/products/{GUMROAD_ID}/subscribers', data=data, timeout=5).json()["subscribers"]]
 
 	for u in g.db.query(User).filter(User.patron > 0).all():
 		if u.patron == 5 or u.email and u.email.lower() in emails or u.id == 1379:
@@ -251,11 +203,16 @@ def monthly(v):
 			elif u.patron == 3: procoins = 10000
 			elif u.patron == 4: procoins = 25000
 			elif u.patron == 5: procoins = 50000
-			else: print(u.username)
+			else:
+				print(u.username)
+				u.patron = 0
+				g.db.add(u)
+				continue
 			u.procoins += procoins
 			g.db.add(u)
 			send_repeatable_notification(u.id, f"You were given {procoins} Marseybux for the month of {month}! You can use them to buy awards in the [shop](/shop).")
 	g.db.commit()
+	
 	return {"message": "Monthly coins granted"}
 
 
@@ -754,9 +711,11 @@ def unshadowban(user_id, v):
 	user = g.db.query(User).filter_by(id=user_id).first()
 	if user.admin_level != 0: abort(403)
 	user.shadowbanned = None
+	user.ban_evade = 0
 	g.db.add(user)
 	for alt in user.alts:
 		alt.shadowbanned = None
+		alt.ban_evade = 0
 		g.db.add(alt)
 
 	ma = ModAction(
