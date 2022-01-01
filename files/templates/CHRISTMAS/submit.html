@@ -182,10 +182,11 @@
 
 <script>
 	window.onload = function() {
+	const storage = window.localStorage;
 	const input = document.getElementById('post-text');
-	const storage = storage.getItem('bodyText');
-	if (storage !== null) {
-		input.innerText = storage;
+	
+	if (storage.getItem('bodyText'); !== null) {
+		input.innerText = storage.getItem('bodyText');;
 	}
 }
 
@@ -204,6 +205,7 @@ bodyInput.addEventListener('keyup', function (e) {
 
     // Make a new timeout set to go off in 1000ms (1 second)
     timeout = setTimeout(function () {
+    	const storage = window.localStorage;
     	const value = bodyInput.innerText;
         storage.setItem('bodyText', value);
         console.log(storage.getItem('bodyText'))
