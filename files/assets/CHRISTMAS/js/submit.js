@@ -77,20 +77,26 @@ document.getElementById('file-upload').addEventListener('change', function(){
 	}
 })
 
-window.onload = function() {
-	const storage = window.localStorage;
-	const input = document.getElementById('post-text');
-
-	if (storage.getItem('bodyText') !== null) {
-		input.value = JSON.parse(storage.getItem('bodyText'));
-	}
-}
+// Local storage
+const storage = window.localStorage;
 
 // Get the input box
 let bodyInput = document.getElementById('post-text');
 
 // Init a timeout variable to be used below
 let timeout = null;
+
+// Draft helpter text
+const helper = document.getElementById('draft-text');
+
+window.onload = function() {
+	const input = document.getElementById('post-text');
+
+	if (storage.getItem('bodyText') !== null) {
+		input.value = JSON.parse(storage.getItem('bodyText'));
+		helper.innerText = 'Draft loaded from storage';
+	}
+}
 
 // Listen for keystroke events
 bodyInput.addEventListener('keyup', function (e) {
@@ -101,12 +107,9 @@ bodyInput.addEventListener('keyup', function (e) {
 
     // Make a new timeout set to go off in 1000ms (1 second)
     timeout = setTimeout(function () {
-    	const storage = window.localStorage;
-    	const helper = document.getElementById('draft-text');
-
     	storage.setItem('bodyText', JSON.stringify(bodyInput.value));
-
     	helper.innerText = 'Draft saved';
+
     	console.log(storage.getItem('bodyText'))
     }, 1000);
 });
