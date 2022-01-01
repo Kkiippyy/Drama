@@ -179,4 +179,35 @@
 {% block scripts %}
 <script defer src="/assets/CHRISTMAS/js/marked.js?a=1"></script>
 <script defer src="/assets/CHRISTMAS/js/submit.js?a=1"></script>
+
+<script>
+	window.onload = function() {
+	const Input = document.getElementById('post-text');
+	const storage = storage.getItem('bodyText');
+	if (storage !== null) {
+		input.innerText = storage;
+	}
+}
+
+// Get the input box
+let bodyInput = document.getElementById('post-text');
+
+// Init a timeout variable to be used below
+let timeout = null;
+
+// Listen for keystroke events
+bodyInput.addEventListener('keyup', function (e) {
+    // Clear the timeout if it has already been set.
+    // This will prevent the previous task from executing
+    // if it has been less than <MILLISECONDS>
+    clearTimeout(timeout);
+
+    // Make a new timeout set to go off in 1000ms (1 second)
+    timeout = setTimeout(function () {
+    	const value = bodyInput.innerText;
+        storage.setItem('bodyText', value);
+        console.log(storage.getItem('bodyText'))
+    }, 1000);
+});
+</script>
 {% endblock %}
