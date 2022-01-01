@@ -1122,8 +1122,8 @@ video {
 .h-16 {
 	height: 4rem;
 }
-.h-8 {
-	height: 2rem;
+.h-6 {
+	height: 1.5rem;
 }
 .h-14 {
 	height: 3.5rem;
@@ -1134,14 +1134,14 @@ video {
 .h-10 {
 	height: 2.5rem;
 }
-.h-6 {
-	height: 1.5rem;
-}
 .h-4 {
 	height: 1rem;
 }
 .h-\[10px\] {
 	height: 10px;
+}
+.h-8 {
+	height: 2rem;
 }
 .h-56 {
 	height: 14rem;
@@ -2233,8 +2233,8 @@ video {
 .pb-2 {
 	padding-bottom: 0.5rem;
 }
-.pt-24 {
-	padding-top: 6rem;
+.pt-20 {
+	padding-top: 5rem;
 }
 .pr-7 {
 	padding-right: 1.75rem;
