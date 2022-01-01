@@ -213,7 +213,7 @@ bodyInput.addEventListener('keyup', function (e) {
     }, 1000);
 });
 
-document.getElementById('submitform').addEventListener('submit', emptyStorage);
+document.getElementById('submitform').addEventListener('submit', emptyStorage('bodyText'));
 
 function emptyStorage(key) {
 	window.localStorage.removeItem(key);
