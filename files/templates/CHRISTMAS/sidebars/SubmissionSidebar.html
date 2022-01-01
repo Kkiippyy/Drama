@@ -203,6 +203,21 @@
 						</button>
 					</div>
 				</li>
+				<li>
+					<div class="label text-black dark:text-gray-200">Manage author</div>
+					<div id="sidebar-ban-{{p.id}}" class="{% if p.author.is_suspended %}hidden{% endif %} text-red-600">
+						<button class="btn btn-red w-full" data-bs-toggle="modal" data-bs-target="#banModal" onclick="banModal('/post/{{p.id}}', '{{ p.author.id }}', '{{p.author.username}}')">
+							<i class="fas fa-user-slash fa-sm fa-fw mr-2"></i>
+							Ban user
+						</button>
+					</div>
+					<div id="sidebar-unban-{{p.id}}" class="{% if not p.author.is_suspended %}hidden{% endif %}">
+						<button class="btn btn-green w-full"  onclick="post_toast2('/unban_user/{{p.author_id}}','sidebar-ban-{{p.id}}','sidebar-unban-{{p.id}}')">
+							<i class="fas fa-user-check fa-sm fa-fw mr-2"></i>
+							Unban user
+						</button>
+					</div>
+				</li>
 			</ul>
 		</div>
 	{% endif %}
