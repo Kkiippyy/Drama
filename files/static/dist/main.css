@@ -3809,12 +3809,12 @@ img.emoji-lg {
 	background-color: rgba(var(--color-700), 0.4);
 }
 
-.dark .dark\:bg-yellow-800\/40 {
-	background-color: rgba(146, 64, 14, 0.4);
+.dark .dark\:bg-yellow-900\/40 {
+	background-color: rgba(120, 53, 15, 0.4);
 }
 
-.dark .dark\:bg-red-800\/40 {
-	background-color: rgba(153, 27, 27, 0.4);
+.dark .dark\:bg-red-900\/40 {
+	background-color: rgba(127, 29, 29, 0.4);
 }
 
 .dark .dark\:bg-none {
