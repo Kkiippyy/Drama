@@ -137,7 +137,7 @@
 	</div>
 	{% if v and v.admin_level > 1 %}
 	<hr class="mt-6 mb-5 h-0.5 border-b border-gray-300 dark:border-gray-900 shadow-inset-t-white-05"/>
-	<div class="relative my-4 px-4 py-3 rounded-md border border-yellow-400 dark:border-yellow-900 bg-yellow-100 dark:bg-yellow-900/40">
+	<div class="relative my-4 px-4 py-3 rounded-md border border-yellow-400 dark:border-yellow-700 bg-yellow-100 dark:bg-transparent">
 		<span class="absolute top-2 right-3 text-base">
 			<i class="fas fa-crown fa-sm text-yellow-400 dark:text-gray-300" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="Visible only to moderators"></i>
 		</span>
@@ -180,7 +180,7 @@
 		</ul>
 	</div>
 	{% if v.id != p.author_id %}
-		<div class="relative my-4 px-4 py-3 rounded-md border border-red-300 dark:border-red-900 bg-red-100 dark:bg-red-900/40 group">
+		<div class="relative my-4 px-4 py-3 rounded-md border border-red-300 dark:border-red-700 bg-red-100 dark:bg-transparent group">
 			<span class="absolute top-2 right-3 text-base">
 				<i class="fas fa-exclamation-triangle fa-sm text-red-400 dark:text-gray-300 group-hover:animate-pulse" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="Visible only to moderators. Recommend internal mod discussion before making changes here."></i>
 			</span>
